@@ -20,11 +20,11 @@ Ejecute el comando docker-compose up -d para crear y ejecutar el contenedor de l
 Ejecute la aplicación utilizando su IDE de preferencia o mediante el comando ./gradlew bootRun.
 Por [postman](https://www.postman.com/) puede operar con la aplicación sin problemas
 
-Se exponen los siguientes endpoints
+### Endpoints de la aplicación
 
 La aplicación levanta en localhost:8080
 
-1. Regristro de usuario (ejemplo)
+#### 1. Regristro de usuario (ejemplo)
 
 curl --location 'http://localhost:8080/api/v1/auth/register' \
 --header 'Content-Type: application/json' \
@@ -47,7 +47,7 @@ curl --location 'http://localhost:8080/api/v1/auth/register' \
 ]
 }'
 
-2. Login de usuario (ejemplo)
+#### 2. Login de usuario (ejemplo)
 
 curl --location 'http://localhost:8080/api/v1/auth/login' \
 --header 'Content-Type: application/json' \
@@ -59,18 +59,12 @@ curl --location 'http://localhost:8080/api/v1/auth/login' \
 
 El response devuelve un Bearer token que debe ser usado para autenticarse en el tercer endpoint (de dominio)
 
-3. Endpoint de respuesta corta para probar autenticación 
+#### 3. Endpoint de respuesta corta para probar autenticación 
 
 curl --location 'http://localhost:8080/api/v1/users' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGV4aXMuZG9uYUBnbWFpbC5jb20iLCJpYXQiOjE2ODMwNTY2MzcsImV4cCI6MTY4MzA1NzUzN30.mfnkZRQn5IORtqOV2X2ujxzBlJA7H7Op8ZqyIaYchr8' \
 --header 'Cookie: JSESSIONID=DBE6235FFB7A53D02EEE06422B3758E3'
 
-Abajo un pequeño diagrama de secuencia y de componentes básico de cómo está armada la lógica del authenticate y login usando JWT
 
-Diagrama de secuencia
-![](/home/alecho/Downloads/plantuml.svg)
-
-Diagrama de componentes
-![](/home/alecho/Downloads/components.svg)
 
 

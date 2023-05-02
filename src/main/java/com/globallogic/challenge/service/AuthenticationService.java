@@ -2,7 +2,6 @@ package com.globallogic.challenge.service;
 
 import com.globallogic.challenge.auth.AuthenticationRequest;
 import com.globallogic.challenge.domain.entity.Phone;
-import com.globallogic.challenge.domain.entity.Role;
 import com.globallogic.challenge.domain.entity.User;
 import com.globallogic.challenge.dto.AuthenticationResponse;
 import com.globallogic.challenge.dto.PhoneDto;
