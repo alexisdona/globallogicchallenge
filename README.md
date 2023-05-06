@@ -1,7 +1,6 @@
-# Proyecto de Spring Security con Spring JPA, securrity y PostgreSQL
+# Proyecto de Spring Security con Spring JPA, securrity y base de datos en memoria H2
 
-Este proyecto es un ejemplo de cómo implementar Spring Security y Spring JPA en una aplicación web que registra usuarios y sus teléfonos en una base de datos PostgreSQL. 
-La aplicación utiliza Docker para crear y administrar el contenedor de la base de datos PostgreSQL.
+Este proyecto es un ejemplo de cómo implementar Spring Security y Spring JPA en una aplicación web que registra usuarios y sus teléfonos en una base de datos in memory H2. 
 
 ### Requisitos
 
