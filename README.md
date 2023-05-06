@@ -7,7 +7,6 @@ La aplicación utiliza Docker para crear y administrar el contenedor de la base 
 
 Antes de comenzar, asegúrese de tener instalado lo siguiente:
 
-* Docker
 * Java 8 o superior
 
 ### Configuración
@@ -16,7 +15,6 @@ Para ejecutar la aplicación, siga estos pasos:
 
 Clone este repositorio en su máquina local.
 Abra una terminal y navegue hasta el directorio raíz del proyecto.
-Ejecute el comando docker-compose up -d para crear y ejecutar el contenedor de la base de datos PostgreSQL.
 Ejecute la aplicación utilizando su IDE de preferencia o mediante el comando ./gradlew bootRun.
 Por [postman](https://www.postman.com/) puede operar con la aplicación sin problemas
 
