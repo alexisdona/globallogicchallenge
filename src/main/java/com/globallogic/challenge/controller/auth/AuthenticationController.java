@@ -1,10 +1,9 @@
-package com.globallogic.challenge.auth;
+package com.globallogic.challenge.controller.auth;
 
 import com.globallogic.challenge.dto.AuthenticationResponse;
 import com.globallogic.challenge.dto.RegisterResponse;
 import com.globallogic.challenge.dto.UserDto;
 import com.globallogic.challenge.service.AuthenticationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

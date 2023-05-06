@@ -1,10 +1,9 @@
 package com.globallogic.challenge.service;
 
-import com.globallogic.challenge.auth.AuthenticationRequest;
+import com.globallogic.challenge.controller.auth.AuthenticationRequest;
 import com.globallogic.challenge.domain.entity.Phone;
 import com.globallogic.challenge.domain.entity.User;
 import com.globallogic.challenge.dto.AuthenticationResponse;
-import com.globallogic.challenge.dto.PhoneDto;
 import com.globallogic.challenge.dto.RegisterResponse;
 import com.globallogic.challenge.dto.UserDto;
 import com.globallogic.challenge.repository.UserRepository;
@@ -19,7 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,8 +33,6 @@ public class AuthenticationServiceTest {
     private UserService userService;
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private PasswordEncoder passwordEncoder;
     @Mock
     private JwtService jwtService;
     @Mock
@@ -101,7 +98,7 @@ public class AuthenticationServiceTest {
         phone2.setCityCode(2);
         phone2.setCountryCode("BR");
 
-        user.setPhones(Arrays.asList(phone1, phone2));
+        user.setPhones(new HashSet<>(Arrays.asList(phone1, phone2)));
 
         String token = "jwt-token";
 
@@ -115,7 +112,6 @@ public class AuthenticationServiceTest {
         assertEquals(user.isActive(), authenticationResponse.isActive());
         assertEquals(user.getName(), authenticationResponse.getName());
         assertEquals(user.getEmail(), authenticationResponse.getEmail());
-        assertEquals(passwordEncoder.encode(user.getPassword()), authenticationResponse.getPassword());
         assertEquals(token, authenticationResponse.getToken());
 
 

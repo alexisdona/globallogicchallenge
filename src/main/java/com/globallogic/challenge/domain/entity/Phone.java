@@ -1,7 +1,5 @@
 package com.globallogic.challenge.domain.entity;
 
-import com.globallogic.challenge.dto.PhoneDto;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "phones")
+@Table(name = "PHONES")
 public class Phone {
 
     @Id
@@ -29,11 +27,4 @@ public class Phone {
     @Column(name="country_code")
     private String countryCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public PhoneDto transformToDto() {
-        return new PhoneDto(this);
-    }
 }

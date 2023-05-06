@@ -3,9 +3,9 @@ package com.globallogic.challenge.service;
 import com.globallogic.challenge.domain.entity.Phone;
 import com.globallogic.challenge.domain.entity.Role;
 import com.globallogic.challenge.domain.entity.User;
+import com.globallogic.challenge.dto.PhoneDto;
 import com.globallogic.challenge.dto.UserDto;
 import com.globallogic.challenge.exception.APIException;
-import com.globallogic.challenge.repository.PhoneRepository;
 import com.globallogic.challenge.repository.UserRepository;
 import com.globallogic.challenge.security.RegexValidator;
 import jakarta.transaction.Transactional;
@@ -14,9 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,15 +29,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final PhoneRepository phoneRepository;
 
     private final PasswordEncoder passwordEncoder;
 
     RegexValidator regexValidator;
 
-    public UserService(UserRepository userRepository, PhoneRepository phoneRepository, PasswordEncoder passwordEncoder, RegexValidator regexValidator) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RegexValidator regexValidator) {
        this.userRepository = userRepository;
-       this.phoneRepository = phoneRepository;
         this.passwordEncoder = passwordEncoder;
         this.regexValidator = regexValidator;
     }
@@ -56,26 +55,18 @@ public class UserService {
                 .lastLogin(now)
                 .active(true)
                 .role(Role.USER)
+                .phones(buildPhones(userDto.getPhones()))
                 .build();
-
-        List<Phone> phones = buildPhones(userDto, user);
-        phoneRepository.saveAll(phones);
 
         return userRepository.save(user);
     }
 
-    private static List<Phone> buildPhones(UserDto userDto, User user) {
-        if (userDto.getPhones() != null) {
-            return userDto.getPhones().stream().map(
-                    phoneDto -> Phone.builder()
-                            .number(phoneDto.getNumber())
-                            .cityCode(phoneDto.getCityCode())
-                            .countryCode(phoneDto.getCountryCode())
-                            .user(user)
-                            .build()
-            ).toList();
-        }
-        return new ArrayList<>();
+    private Set<Phone> buildPhones(Set<PhoneDto> phones) {
+        return phones != null ? phones.stream().map(phoneDto -> Phone.builder()
+                .number(phoneDto.getNumber())
+                        .cityCode(phoneDto.getCityCode())
+                .countryCode(phoneDto.getCountryCode())
+                .build()).collect(Collectors.toSet()) : new HashSet<>();
     }
 
     public void updateLastLoginDate(String userId) {

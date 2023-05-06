@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -26,8 +26,6 @@ public class AuthenticationResponse {
     private boolean isActive;
     private String name;
     private String email;
-    private String password;
-    private List<PhoneDto> phones;
-
+    private Set<PhoneDto> phones;
 }
 

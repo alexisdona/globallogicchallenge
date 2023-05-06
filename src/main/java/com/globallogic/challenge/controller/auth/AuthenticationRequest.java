@@ -1,4 +1,4 @@
-package com.globallogic.challenge.auth;
+package com.globallogic.challenge.controller.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

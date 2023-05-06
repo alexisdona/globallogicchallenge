@@ -3,10 +3,8 @@ package com.globallogic.challenge.service;
 import com.globallogic.challenge.domain.entity.Phone;
 import com.globallogic.challenge.domain.entity.Role;
 import com.globallogic.challenge.domain.entity.User;
-import com.globallogic.challenge.dto.PhoneDto;
 import com.globallogic.challenge.dto.UserDto;
 import com.globallogic.challenge.exception.APIException;
-import com.globallogic.challenge.repository.PhoneRepository;
 import com.globallogic.challenge.repository.UserRepository;
 import com.globallogic.challenge.security.RegexValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,9 +29,6 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private PhoneRepository phoneRepository;
-
-    @Mock
     private PasswordEncoder passwordEncoder;
 
     @Mock
@@ -52,10 +47,7 @@ public class UserServiceTest {
         userDto.setName("Test User");
         userDto.setEmail("test@example.com");
         userDto.setPassword("Test1234");
-        userDto.setPhones(Arrays.asList(
-                new PhoneDto(),
-                new PhoneDto()
-        ));
+
     }
 
     @Test
@@ -73,7 +65,6 @@ public class UserServiceTest {
 
         when(userRepository.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
         when(passwordEncoder.encode(userDto.getPassword())).thenReturn("encodedPassword");
-        when(phoneRepository.saveAll(any())).thenReturn(phones);
         when(userRepository.save(any())).thenReturn(user);
 
         User result = userService.createUser(userDto);
@@ -105,7 +96,6 @@ public class UserServiceTest {
 
         verify(userRepository, times(1)).findByEmail(userDto.getEmail());
         verify(passwordEncoder, never()).encode(any());
-        verify(phoneRepository, never()).saveAll(any());
         verify(userRepository, never()).save(any());
     }
 
@@ -116,10 +106,7 @@ public class UserServiceTest {
         userDto.setName("Test User");
         userDto.setEmail("test.com");
         userDto.setPassword("Test1234");
-        userDto.setPhones(Arrays.asList(
-                new PhoneDto(),
-                new PhoneDto()
-        ));
+
 
         when(userRepository.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
         doThrow(new APIException(HttpStatus.BAD_REQUEST, "email error")).when(regexValidator).isValid(anyString(), anyString(), anyString());
@@ -128,7 +115,6 @@ public class UserServiceTest {
         assertEquals("email error", exception.getMessage());
 
         verify(passwordEncoder, never()).encode(any());
-        verify(phoneRepository, never()).saveAll(any());
         verify(userRepository, never()).save(any());
     }
 
@@ -138,10 +124,6 @@ public class UserServiceTest {
         userDto.setName("Test User");
         userDto.setEmail(null);
         userDto.setPassword("Test1234");
-        userDto.setPhones(Arrays.asList(
-                new PhoneDto(),
-                new PhoneDto()
-        ));
 
         when(userRepository.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
         APIException exception = assertThrows(APIException.class, () -> userService.createUser(userDto));
@@ -149,7 +131,6 @@ public class UserServiceTest {
         assertEquals("You must provide an email", exception.getMessage());
 
         verify(passwordEncoder, never()).encode(any());
-        verify(phoneRepository, never()).saveAll(any());
         verify(userRepository, never()).save(any());
     }
 

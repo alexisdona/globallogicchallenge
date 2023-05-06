@@ -12,18 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PhoneDto {
-    private long id;
     private long number;
     @JsonProperty(value = "city_code")
     private int cityCode;
     @JsonProperty(value = "country_code")
     private String countryCode;
-
-    public PhoneDto(Phone phone) {
-        this.id = phone.getId();
-       this.number = phone.getNumber();
-       this.cityCode = phone.getCityCode();
-       this.countryCode = phone.getCountryCode();
-
-    }
 }
